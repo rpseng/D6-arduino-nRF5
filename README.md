@@ -24,7 +24,7 @@ Coupon: GB0722MPOW
  4. Add ```https://atc1441.github.io/D6Library/package_nRF5_boards_index.json``` as an "Additional Board Manager URL"
  5. Open the Boards Manager from the Tools -> Board menu and install "D6 Tracker by ATC1441"
  6. Select the DSD6 Tracker board from the Tools -> Board menu
- 7. You will find the DFU update file in a folder like this on windows. ```C:\\Users\\USERNAME\\AppData\\Local\\Temp\\arduino_build_RANDOM/SKETCHNAME.ino.zip```
+ 7. You will find the DFU update file in a folder like this on windows. ```C:\Users\USERNAME\AppData\Local\Temp\arduino_build_RANDOM\SKETCHNAME.ino.zip```
 
 __NOTE:__ During installation it takes the Arduino IDE a few minutes to extract the tools after they have been downloaded, please be patient.
 
