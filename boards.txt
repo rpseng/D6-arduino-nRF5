@@ -44,6 +44,7 @@ dsd6Watch.build.extra_flags=-DNRF52
 dsd6Watch.build.float_flags=-mfloat-abi=hard -mfpu=fpv4-sp-d16 -DCONFIG_NFCT_PINS_AS_GPIOS -DUSE_LFRC -DNRF52 -DS132 -DNRF51_S132
 dsd6Watch.build.ldscript=armgcc_s132_nrf52832_xxaa.ld
 
+dsd6Watch.menu.softdevice.s132=S132
 dsd6Watch.menu.softdevice.stockFW=Only Softdevice for Flashing via SWD
 dsd6Watch.menu.softdevice.stockFW.flashVariantFile=sd.hex
 dsd6Watch.menu.softdevice.stockFW.softdeviceversion=2.0.1
