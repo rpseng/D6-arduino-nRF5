@@ -9,7 +9,7 @@ This core is edited for the D6 Fitness Tracker, it is original from here https:/
  1. [Download and install the Arduino IDE](https://www.arduino.cc/en/Main/Software) (At least v1.6.12)
  2. Start the Arduino IDE
  3. Go into Preferences
- 4. Add ```https://sandeepmistry.github.io/arduino-nRF5/package_nRF5_boards_index.json``` as an "Additional Board Manager URL"
+ 4. Add ```https://atc1441.github.io/D6Library/package_nRF5_boards_index.json``` as an "Additional Board Manager URL"
  5. Open the Boards Manager from the Tools -> Board menu and install "Nordic Semiconductor nRF5 Boards"
  6. Select your nRF5 board from the Tools -> Board menu
 
