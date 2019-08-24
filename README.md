@@ -5,6 +5,8 @@ This core is edited for the D6 Fitness Tracker, it is original from here https:/
 This is the Installable version of the Portable version shown in this Video:
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/3gjmEdEDJ5A/0.jpg)](https://www.youtube.com/watch?v=3gjmEdEDJ5A)
 
+After installation the Core works as in the Video
+
 ## Installing
 
 ### Board Manager
