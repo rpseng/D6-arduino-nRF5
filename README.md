@@ -12,6 +12,7 @@ Here is the [D6Flasher](https://play.google.com/store/apps/details?id=com.atcnet
 with the Flasher it is Possible to flash the Created firmware over the air, please view the Youtube Video.
 
 You can buy the Tracker on Gearbest for as Cheap as 5$ [https://www.gearbest.com/smart-watches/pp_1232618.html?wid=1433363&lkid=52058797](https://www.gearbest.com/smart-watches/pp_1232618.html?wid=1433363&lkid=52058797)
+Coupon: GB0722MPOW
 
 ## Installing
 
