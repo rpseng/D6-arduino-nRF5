@@ -22,14 +22,15 @@ __NOTE:__ During installation it takes the Arduino IDE a few minutes to extract 
 
 
 ### Adafruit's nrfutil tools
-adafruit-nrfutil (derived from Nordic pc-nrfutil) is needed to upload sketch via serial port.
 
-For Windows and macOS, pre-built executable binaries are included in the BSP at tools/adafruit-nrfutil/. It should work out of the box.
+[adafruit-nrfutil](https://github.com/adafruit/Adafruit_nRF52_nrfutil) (derived from Nordic pc-nrfutil) is needed to upload sketch via serial port.
 
-Linux user need to run follow command to install it from PyPi
+- For Windows and macOS, pre-built executable binaries are included in the BSP at `tools/adafruit-nrfutil/`. It should work out of the box.
+- Linux user need to run follow command to install it from PyPi
 
-```$ pip3 install adafruit-nrfutil --user```
-
+    ```
+    $ pip3 install adafruit-nrfutil --user
+	```
 
 ### Driver Setup for St-Link
 
