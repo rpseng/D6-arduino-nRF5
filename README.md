@@ -28,7 +28,11 @@ __NOTE__: To roll back to the original driver go to: Device Manager -> Right cli
 
 ## Credits
 
+Copy from the [Sandeepmistry core](https://github.com/sandeepmistry/arduino-nRF5) and edited to make D6 Fitness Tracker Compatible.
+
 This core is based on the [Arduino SAMD Core](https://github.com/arduino/ArduinoCore-samd) and licensed under the same [LGPL License](LICENSE)
+
+Nrfutil taken from [Adafruit nRF52 Library](https://github.com/adafruit/Adafruit_nRF52_Arduino)
 
 The following tools are used:
 
