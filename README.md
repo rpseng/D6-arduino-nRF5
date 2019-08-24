@@ -1,4 +1,4 @@
-# Arduino Core for Nordic Semiconductor nRF5 based boards
+# D6 Fitness Tracker Arduino Core for Nordic Semiconductor nRF5 based boards
 
 This core is edited for the D6 Fitness Tracker, it is original from here https://github.com/sandeepmistry/arduino-nRF5
 
