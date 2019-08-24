@@ -2,6 +2,9 @@
 
 This core is edited for the D6 Fitness Tracker, it is original from here https://github.com/sandeepmistry/arduino-nRF5
 
+This is the Installable version of the Portable version shown in this Video:
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/3gjmEdEDJ5A/0.jpg)](https://www.youtube.com/watch?v=3gjmEdEDJ5A)
+
 ## Installing
 
 ### Board Manager
@@ -22,7 +25,7 @@ __NOTE:__ During installation it takes the Arduino IDE a few minutes to extract 
  3. Start ```Zadig```
  4. Select ```Options -> List All Devices```
  5. Plug and unplug your device to find what changes, and select the ```St-Link``` from the device dropdown
- 6. Click ```Replace Driver```
+ 6. Click ```Replace Driver``` / ```Install Driver```
 
 __NOTE__: To roll back to the original driver go to: Device Manager -> Right click on device -> Check box for "Delete the driver software for this device" and click Uninstall
 
