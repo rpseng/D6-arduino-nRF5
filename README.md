@@ -8,6 +8,11 @@ This is the Installable version of the Portable version shown in this Video:
 
 After installation the Core works as in the Video
 
+Here is the [D6Flasher](https://play.google.com/store/apps/details?id=com.atcnetz.ble.readwrite) on Google Play-store
+with the Flasher it is Possible to flash the Created firmware over the air, please view the Youtube Video.
+
+You can buy the Tracker on Gearbest for as Cheap as 5$ [https://www.gearbest.com/smart-watches/pp_1232618.html?wid=1433363&lkid=52058797](https://www.gearbest.com/smart-watches/pp_1232618.html?wid=1433363&lkid=52058797)
+
 ## Installing
 
 ### Board Manager
@@ -43,6 +48,10 @@ __NOTE:__ During installation it takes the Arduino IDE a few minutes to extract 
  6. Click ```Replace Driver``` / ```Install Driver```
 
 __NOTE__: To roll back to the original driver go to: Device Manager -> Right click on device -> Check box for "Delete the driver software for this device" and click Uninstall
+
+### Pinout, Flashfiles and Espruino Version
+
+Here [Fanoush](https://github.com/fanoush/ds-d6) made much work in the Espruino direction with the Pinout and Flash Backup files.
 
 ## Credits
 
