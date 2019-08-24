@@ -31,7 +31,7 @@ Linux user need to run follow command to install it from PyPi
 ```$ pip3 install adafruit-nrfutil --user```
 
 
-###### Driver Setup for St-Link
+### Driver Setup for St-Link
 
  1. Download [Zadig](http://zadig.akeo.ie)
  2. Plugin St-Link board
