@@ -1,12 +1,12 @@
 #include <SPI.h>
 #include <stdint.h>
 #include <BLEPeripheral.h>
-#include <Adafruit_GFX.h>
+#include "Adafruit_GFX.h"
 #include <nrf_nvic.h>//interrupt controller stuff
 #include <nrf_sdm.h>
 #include <nrf_soc.h>
 #include <WInterrupts.h>
-#include <Adafruit_SSD1306.h>
+#include"Adafruit_SSD1306.h"
 #include <TimeLib.h>
 #include <nrf.h>
 #include <Wire.h>
