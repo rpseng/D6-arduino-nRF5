@@ -6,7 +6,7 @@
 #include <nrf_sdm.h>
 #include <nrf_soc.h>
 #include <WInterrupts.h>
-#include"Adafruit_SSD1306.h"
+#include"SSD1306.h"
 #include <TimeLib.h>
 #include <nrf.h>
 #include <Wire.h>
