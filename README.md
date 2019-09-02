@@ -37,6 +37,7 @@ __NOTE:__ During installation it takes the Arduino IDE a few minutes to extract 
 - Linux user need to run follow command to install it from PyPi
 
     ```
+    $ pip3 install wheel --user
     $ pip3 install adafruit-nrfutil --user
 	```
 
