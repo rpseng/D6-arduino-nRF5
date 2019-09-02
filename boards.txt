@@ -47,11 +47,11 @@ dsd6Watch.build.ldscript=armgcc_s132_nrf52832_xxaa.ld
 dsd6Watch.menu.softdevice.stockFW=Only Softdevice for Flashing via SWD
 dsd6Watch.menu.softdevice.stockFW.flashVariantFile=sd.hex
 dsd6Watch.menu.softdevice.stockFW.softdeviceversion=2.0.1
-dsd6Watch.menu.softdevice.stockFW.softdevice=S132
+dsd6Watch.menu.softdevice.stockFW.softdevice=s132
 dsd6Watch.menu.softdevice.onlySoftDevice=Back To Stock Firmware
 dsd6Watch.menu.softdevice.onlySoftDevice.flashVariantFile=flash.bin
 dsd6Watch.menu.softdevice.onlySoftDevice.softdeviceversion=2.0.1
-dsd6Watch.menu.softdevice.onlySoftDevice.softdevice=S132
+dsd6Watch.menu.softdevice.onlySoftDevice.softdevice=s132
 
 ###########################
 
