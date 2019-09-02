@@ -31,7 +31,7 @@ __NOTE:__ During installation it takes the Arduino IDE a few minutes to extract 
 
 ### Adafruit's nrfutil tools
 
-[adafruit-nrfutil](https://github.com/adafruit/Adafruit_nRF52_nrfutil) (derived from Nordic pc-nrfutil) is needed to upload sketch via serial port.
+[adafruit-nrfutil](https://github.com/adafruit/Adafruit_nRF52_nrfutil) (derived from Nordic pc-nrfutil) is needed to create the OTA update file.
 
 - For Windows and macOS, pre-built executable binaries are included in the BSP at `tools/adafruit-nrfutil/`. It should work out of the box.
 - Linux users need to run the follow commands to install the nrfutil tools:
