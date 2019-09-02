@@ -44,6 +44,7 @@ __NOTE:__ During installation it takes the Arduino IDE a few minutes to extract 
     ```
     PATH="$HOME/.local/bin/:$PATH"
     ```
+    After that you may need to restart your pc.
 
 ### Driver Setup for St-Link
 
