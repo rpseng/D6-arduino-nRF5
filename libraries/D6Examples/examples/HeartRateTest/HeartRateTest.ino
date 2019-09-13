@@ -153,7 +153,6 @@ void setup() {
   display.setCursor(10, 0);
   display.println("Start");
   display.display();
-  delay(100);
   digitalWrite(25, LOW);
   Wire.begin();
   delay(100);
@@ -379,6 +378,16 @@ uint8_t readRegister(uint8_t addr)
   return Wire.read();
 }
 
+static bool ppg_current_change = false;
+
+#define PAH8001_LED_STEP_DELTA 2
+#define PAH8001_LED_EXPOSURE_MAX 496
+#define PAH8001_LED_EXPOSURE_MIN 32
+#define PAH8001_LED_EXPOSURE_BIG 420
+#define PAH8001_LED_EXPOSURE_SML 64
+#define PAH8001_LED_STEP_MAX 31
+#define PAH8001_LED_STEP_MIN 1
+
 static const struct {
   uint8_t reg;
   uint8_t value;
@@ -416,70 +425,235 @@ static const struct {
   { 0x5Du, 0x81u }
 };
 
-void Pah8001_Configure()
+static bool Pah8001_Configure()
 {
   uint8_t value;
-  writeRegister(0x06, 0x82);
+
+  writeRegister(0x06u, 0x82u);
   delay(10);
-  writeRegister(0x09,0x5A);
-  writeRegister(0x05,0x99);
-  value = readRegister (0x17);
-  writeRegister(0x17, value | 0x80 );
+  writeRegister(0x09u, 0x5Au        );
+  writeRegister(0x05u, 0x99u        );
+  value = readRegister (0x17u);
+  writeRegister(0x17u, value | 0x80 );
+
   for (size_t i = 0; i < sizeof(config) / sizeof(config[0]); i++)
   {
     writeRegister(config[i].reg, config[i].value);
   }
+
   value = readRegister(0x00);
+
+  return true;
 }
 
-
-void Pah8001_ReadRawData(uint8_t buffer[9])
+static bool Pah8001_UpdateLed(bool touch)
 {
-  uint8_t tmp[4];
-  uint8_t value;
-  writeRegister(0x7F, 0x01);
+  static bool ppg_sleep = true;
+  static uint8_t ppg_states = 0;
+  static uint8_t ppg_led_mode = 0;
+  static uint8_t ppg_led_step = 10;
 
-  buffer[0] = readRegister(0x68) & 0xF;
+  if (!touch)
+  {
+    writeRegister(0x7Fu, 0x00u);
+    writeRegister(0x05u, 0xB8u);
+    writeRegister(0x7Fu, 0x01u);
+    writeRegister(0x42u, 0xA0u);
+    writeRegister(0x38u, 0xE5u);
+
+    ppg_led_step = 10;
+    ppg_sleep = true;
+    ppg_current_change = false;
+  }
+  else
+  {
+    uint8_t value;
+    uint16_t exposureTime;
+    writeRegister(0x7Fu, 0x00u);
+    writeRegister(0x05u, 0x98u);
+    writeRegister(0x7Fu, 0x01u);
+    writeRegister(0x42u, 0xA4u);
+    writeRegister(0x7Fu, 0x00u);
+
+    // Read exposure time
+    value = readRegister(0x33);
+    exposureTime = (value & 0x3u) << 8;
+    value = readRegister(0x32);
+    exposureTime |= value;
+
+    writeRegister(0x7Fu, 0x01u);
+    if (ppg_sleep)
+    {
+      writeRegister(0x38u, (0xE0u | 10));
+      ppg_sleep = false;
+    }
+
+    if (ppg_states++ > 3)
+    {
+      ppg_states = 0;
+      if (ppg_led_mode == 0)
+      {
+        if (exposureTime >= PAH8001_LED_EXPOSURE_MAX
+            || exposureTime <= PAH8001_LED_EXPOSURE_MIN)
+        {
+          ppg_led_step = readRegister(0x38u);
+          ppg_led_step &= 0x1Fu;
+
+          if (exposureTime >= PAH8001_LED_EXPOSURE_MAX &&
+              ppg_led_step < PAH8001_LED_STEP_MAX)
+          {
+            ppg_led_mode = 1;
+            if (ppg_led_step += PAH8001_LED_STEP_DELTA > PAH8001_LED_STEP_MAX) {
+              ppg_led_step = PAH8001_LED_STEP_MAX;
+            }
+            writeRegister(0x38u, ppg_led_step | 0xE0u);
+            ppg_current_change = true;
+          }
+          else if (exposureTime <= PAH8001_LED_EXPOSURE_MIN &&
+                   ppg_led_step > PAH8001_LED_STEP_MIN)
+          {
+            ppg_led_mode = 2;
+            if (ppg_led_step <= PAH8001_LED_STEP_MIN + PAH8001_LED_STEP_DELTA) {
+              ppg_led_step = PAH8001_LED_STEP_MIN;
+            }
+            else ppg_led_step -= PAH8001_LED_STEP_DELTA;
+
+            writeRegister(0x38u, ppg_led_step | 0xE0u);
+            ppg_current_change = true;
+          }
+          else
+          {
+            ppg_led_mode = 0;
+            ppg_current_change = false;
+          }
+        }
+        else ppg_current_change = false;
+      }
+      else if (ppg_led_mode == 1)
+      {
+        if (exposureTime > PAH8001_LED_EXPOSURE_BIG)
+        {
+          if (ppg_led_step += PAH8001_LED_STEP_DELTA > PAH8001_LED_STEP_MAX)
+          {
+            ppg_led_mode = 0;
+            ppg_led_step = PAH8001_LED_STEP_MAX;
+          }
+          writeRegister(0x38u, ppg_led_step | 0xE0u);
+          ppg_current_change = true;
+        }
+        else
+        {
+          ppg_led_mode = 0;
+          ppg_current_change = false;
+        }
+      }
+      else
+      {
+        if (exposureTime < PAH8001_LED_EXPOSURE_SML)
+        {
+          ppg_led_mode = 2;
+          if (ppg_led_step <= PAH8001_LED_STEP_MIN + PAH8001_LED_STEP_DELTA)
+          {
+            ppg_led_mode = 0;
+            ppg_led_step = PAH8001_LED_STEP_MIN;
+          }
+          else ppg_led_step -= PAH8001_LED_STEP_DELTA;
+
+          writeRegister(0x38u, ppg_led_step | 0xE0u);
+          ppg_current_change = true;
+        }
+        else
+        {
+          ppg_led_mode = 0;
+          ppg_current_change = false;
+        }
+      }
+    }
+    else {
+      ppg_current_change = false;
+    }
+  }
+  return true;
+}
+
+uint8_t Pah8001_ReadRawData(uint8_t buffer[9])
+{
+  static uint8_t ppg_frame_count = 0, touch_cnt = 0;
+  uint8_t value;
+  writeRegister(0x7Fu, 0x00u);
+  value = readRegister(0x59u);
+  if (value == 0x80)
+    touch_cnt = 0;
+  if (touch_cnt++ < 250)
+    if (!Pah8001_UpdateLed(1)) return 0x13;
+    else
+    {
+      if (!Pah8001_UpdateLed(0)) return 0x13;
+      touch_cnt = 252;
+    }
+  writeRegister(0x7Fu, 0x01u);
+
+  value = readRegister(0x68u);
+  buffer[0] = value & 0xFu;
+
 
   if (buffer[0] != 0) //0 means no data, 1~15 mean have data
   {
+    uint8_t tmp[4];
+    /* 0x7f is change bank register,
+      0x64~0x67 is HR_DATA
+      0x1a~0x1C is HR_DATA_Algo
+    */
+
     Wire.beginTransmission(0x6b);
     Wire.write(0x64);
     Wire.endTransmission();
     Wire.requestFrom(0x6b, 4);
 
-    buffer[1] = Wire.read() & 0xFF;
-    buffer[2] = Wire.read() & 0xFF;
-    buffer[3] = Wire.read() & 0xFF;
-    buffer[4] = Wire.read() & 0xFF;
+    buffer[1] = Wire.read() & 0xFFu;
+    buffer[2] = Wire.read() & 0xFFu;
+    buffer[3] = Wire.read() & 0xFFu;
+    buffer[4] = Wire.read() & 0xFFu;
 
     Wire.beginTransmission(0x6b);
     Wire.write(0x1a);
     Wire.endTransmission();
     Wire.requestFrom(0x6b, 4);
 
-    buffer[5] = Wire.read() & 0xFF;
-    buffer[6] = Wire.read() & 0xFF;
-    buffer[7] = Wire.read() & 0xFF;
+    buffer[5] = Wire.read() & 0xFFu;
+    buffer[6] = Wire.read() & 0xFFu;
+    buffer[7] = Wire.read() & 0xFFu;
 
-    writeRegister(0x7F, 0x00);
-    buffer[8] = readRegister(0x59) & 0x80;
+    writeRegister(0x7Fu, 0x00u);
+    value = readRegister(0x59u);
+    buffer[8] = value & 0x80u;
   }
   else
   {
-    writeRegister(0x7F, 0x00);
+    writeRegister(0x7Fu, 0x00u);
+    return 0x22;
   }
+  return 0;
 }
 
-void Pah8001_PowerOff(void)
+
+bool Pah8001_HRValid(void)
 {
-  writeRegister(0x7F, 0x00);
-  writeRegister(0x06, 0x0A);
+  uint8_t value;
+  value = readRegister(0x59u);
+  return value & 0x80u == 0x80u;
 }
 
-void Pah8001_PowerOn(void)
+bool Pah8001_PowerOff(void)
 {
-  writeRegister(0x7F, 0x00);
-  writeRegister(0x06, 0x02);
-  writeRegister(0x05, 0x99);
+  writeRegister(0x7Fu, 0x00u);
+  writeRegister(0x06u, 0x0Au);
+  return true;
+}
+
+bool Pah8001_PowerOn(void)
+{
+  writeRegister(0x7Fu, 0x00u);
+  writeRegister(0x06u, 0x02u);
+  writeRegister(0x05u, 0x99u);
 }

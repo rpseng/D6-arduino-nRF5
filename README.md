@@ -4,7 +4,7 @@ This core is edited for the D6 Fitness Tracker, it is original from here https:/
 
 This is the Installable version of the Portable version shown in this Video:
 (Click on the Picture to watch the Video)
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/3gjmEdEDJ5A/0.jpg)](https://www.youtube.com/watch?v=3gjmEdEDJ5A)
+[![YoutubeVideo](https://img.youtube.com/vi/3gjmEdEDJ5A/0.jpg)](https://www.youtube.com/watch?v=3gjmEdEDJ5A)
 
 After installation the Core works as in the Video
 
@@ -31,7 +31,7 @@ __NOTE:__ During installation it takes the Arduino IDE a few minutes to extract 
 
 ### Adafruit's nrfutil tools
 
-[adafruit-nrfutil](https://github.com/adafruit/Adafruit_nRF52_nrfutil) (derived from Nordic pc-nrfutil) is needed to upload sketch via serial port.
+[adafruit-nrfutil](https://github.com/adafruit/Adafruit_nRF52_nrfutil) (derived from Nordic pc-nrfutil) is needed to create the OTA update file.
 
 - For Windows and macOS, pre-built executable binaries are included in the BSP at `tools/adafruit-nrfutil/`. It should work out of the box.
 - Linux users need to run the follow commands to install the nrfutil tools:
@@ -44,6 +44,7 @@ __NOTE:__ During installation it takes the Arduino IDE a few minutes to extract 
     ```
     PATH="$HOME/.local/bin/:$PATH"
     ```
+    After that you may need to restart your pc.
 
 ### Driver Setup for St-Link
 
